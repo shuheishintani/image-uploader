@@ -32,8 +32,8 @@ const LinearProgressWithLabel = (
 };
 
 type Props = {
-  file: File;
-  setFile: Dispatch<SetStateAction<File>>;
+  file: File | null;
+  setFile: Dispatch<SetStateAction<File | null>>;
   setUploading: Dispatch<SetStateAction<'ready' | 'uploading' | 'done'>>;
   setUrl: Dispatch<SetStateAction<string>>;
 };

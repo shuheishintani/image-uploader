@@ -32,7 +32,7 @@ const theme = createMuiTheme({
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
+    if (jssStyles?.parentElement) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);

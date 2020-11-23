@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import DropZone from '@/components/uploadForm/DropZone';
 import ProgressBar from '@/components/uploadForm/ProgressBar';
 import SelectFileButton from '@/components/uploadForm/SelectFileButton';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import {
   Grid,
   Typography,
@@ -51,7 +51,7 @@ const useStyles = makeStyles(() =>
 
 const UploadForm: FC = () => {
   const classes = useStyles();
-  const [file, setFile] = useState<File>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string>('');
   const [uploading, setUploading] = useState<'ready' | 'uploading' | 'done'>(
     'ready'
