@@ -12,9 +12,10 @@ const SelectFileButton: FC<Props> = ({ setFile, setError, setUploading }) => {
     e: ChangeEvent<HTMLInputElement>
   ) => void = useCallback(
     e => {
-      const selectedFile = e.target.files[0];
+      const selectedFile: File = e.target.files[0];
+      const types: string[] = ['image/png', 'image/jpeg'];
 
-      if (selectedFile && (selectedFile.type === 'image/png' || 'image/jpeg')) {
+      if (selectedFile && types.includes(selectedFile.type)) {
         setFile(selectedFile);
         setUploading('uploading');
       } else {

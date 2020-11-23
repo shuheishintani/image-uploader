@@ -52,12 +52,11 @@ const useStyles = makeStyles(() =>
 const UploadForm: FC = () => {
   const classes = useStyles();
   const [file, setFile] = useState<File>(null);
-  const [error, setError] = useState<string>(null);
+  const [error, setError] = useState<string>('');
   const [uploading, setUploading] = useState<'ready' | 'uploading' | 'done'>(
     'ready'
   );
-  const [url, setUrl] = useState<string>(null);
-  const [copied, setCopied] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>('');
   const [openTip, setOpenTip] = useState<boolean>(false);
 
   return (
@@ -97,8 +96,14 @@ const UploadForm: FC = () => {
                     setUploading={setUploading}
                     setError={setError}
                   />
+
                   {error && (
-                    <Typography variant="subtitle2">{error}</Typography>
+                    <>
+                      <Box m={2} />
+                      <Typography variant="subtitle2" color="secondary">
+                        {error}
+                      </Typography>
+                    </>
                   )}
                 </Grid>
               )}
@@ -145,10 +150,7 @@ const UploadForm: FC = () => {
                           placement="top"
                           title="Copied!"
                         >
-                          <CopyToClipboard
-                            text={url}
-                            onCopy={() => setCopied(true)}
-                          >
+                          <CopyToClipboard text={url}>
                             <IconButton onClick={() => setOpenTip(true)}>
                               <FileCopyIcon />
                             </IconButton>
@@ -161,7 +163,11 @@ const UploadForm: FC = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => setUploading('ready')}
+                    onClick={() => {
+                      setUploading('ready');
+                      setUrl('');
+                      setError('');
+                    }}
                   >
                     Back Home
                   </Button>
