@@ -11,6 +11,22 @@ const theme = createMuiTheme({
       default: '#fafafb',
     },
   },
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        '&$focused': {
+          '& $notchedOutline': {
+            borderColor: '#2979ff',
+          },
+        },
+        '&:hover': {
+          '& $notchedOutline': {
+            borderColor: '#2979ff',
+          },
+        },
+      },
+    },
+  },
 });
 
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
