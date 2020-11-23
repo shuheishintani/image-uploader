@@ -28,7 +28,7 @@ const DropZone: FC<Props> = ({ setFile, setError, setUploading }) => {
     acceptedFiles => {
       const selectedFile = acceptedFiles[0];
 
-      if (selectedFile && (selectedFile.type === 'image/png' || 'image/jpeg')) {
+      if (selectedFile && selectedFile.type === ('image/png' || 'image/jpeg')) {
         setFile(selectedFile);
         setUploading('uploading');
       } else {

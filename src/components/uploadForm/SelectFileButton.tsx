@@ -14,7 +14,7 @@ const SelectFileButton: FC<Props> = ({ setFile, setError, setUploading }) => {
     e => {
       const selectedFile: File = e.target.files[0];
 
-      if (selectedFile && (selectedFile.type === 'image/png' || 'image/jpeg')) {
+      if (selectedFile && selectedFile.type === ('image/png' || 'image/jpeg')) {
         console.log(selectedFile.type);
 
         setFile(selectedFile);
