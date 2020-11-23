@@ -17,7 +17,7 @@ const useStyles = makeStyles(() =>
 );
 
 type Props = {
-  setFile: Dispatch<SetStateAction<File>>;
+  setFile: Dispatch<SetStateAction<File | null>>;
   setUploading: Dispatch<SetStateAction<'ready' | 'uploading' | 'done'>>;
   setError: Dispatch<SetStateAction<string>>;
 };

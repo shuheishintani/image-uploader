@@ -2,7 +2,7 @@ import { FC, useCallback, ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { Button } from '@material-ui/core';
 
 type Props = {
-  setFile: Dispatch<SetStateAction<File>>;
+  setFile: Dispatch<SetStateAction<File | null>>;
   setUploading: Dispatch<SetStateAction<'ready' | 'uploading' | 'done'>>;
   setError: Dispatch<SetStateAction<string>>;
 };
@@ -12,6 +12,9 @@ const SelectFileButton: FC<Props> = ({ setFile, setError, setUploading }) => {
     e: ChangeEvent<HTMLInputElement>
   ) => void = useCallback(
     e => {
+      if (e.target.files === null) {
+        return;
+      }
       const selectedFile: File = e.target.files[0];
       const types: string[] = ['image/png', 'image/jpeg'];
 
