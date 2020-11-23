@@ -56,7 +56,7 @@ const UploadForm: FC = () => {
   const [uploading, setUploading] = useState<'ready' | 'uploading' | 'done'>(
     'ready'
   );
-  const [url, setUrl] = useState<string>(null);
+  const [url, setUrl] = useState<string>('');
   const [copied, setCopied] = useState<boolean>(false);
   const [openTip, setOpenTip] = useState<boolean>(false);
 
