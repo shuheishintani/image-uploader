@@ -4,7 +4,7 @@ import { storage, db } from '@/config/firebase';
 const useStorage = file => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
-  const [url, setUrl] = useState(null);
+  const [url, setUrl] = useState<string>('');
 
   useEffect(() => {
     const storageRef = storage.ref(file.name);
@@ -14,7 +14,6 @@ const useStorage = file => {
       'state_changed',
       snap => {
         const percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-        console.log(percentage);
         setProgress(percentage);
       },
       err => {

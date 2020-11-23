@@ -13,10 +13,9 @@ const SelectFileButton: FC<Props> = ({ setFile, setError, setUploading }) => {
   ) => void = useCallback(
     e => {
       const selectedFile: File = e.target.files[0];
+      const types: string[] = ['image/png', 'image/jpeg'];
 
-      if (selectedFile && selectedFile.type === ('image/png' || 'image/jpeg')) {
-        console.log(selectedFile.type);
-
+      if (selectedFile && types.includes(selectedFile.type)) {
         setFile(selectedFile);
         setUploading('uploading');
       } else {
