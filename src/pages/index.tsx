@@ -1,8 +1,21 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import Image from 'next/image';
 import ProgressBar from '@/components/ProgressBar';
-import { Grid, Typography, Button, Box } from '@material-ui/core';
+import { useDropzone } from 'react-dropzone';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import {
+  Grid,
+  Typography,
+  Button,
+  Box,
+  Icon,
+  IconButton,
+} from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
+import {
+  CheckCircle as CheckCircleIcon,
+  FileCopy as FileCopyIcon,
+} from '@material-ui/icons';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -21,6 +34,12 @@ const useStyles = makeStyles(() =>
       border: '1px dashed #97bef4',
       borderRadius: '16px',
     },
+    uploadedImg: {
+      borderRadius: '16px',
+    },
+    checkCircleIcon: {
+      color: '#22bb33',
+    },
   })
 );
 
@@ -33,7 +52,23 @@ export default function Home() {
   );
   const [url, setUrl] = useState<string>(null);
 
-  const selectFileHandler: (e: ChangeEvent<HTMLInputElement>) => void = e => {
+  const onDrop = useCallback(acceptedFiles => {
+    const selectedFile = acceptedFiles[0];
+
+    if (selectedFile && (selectedFile.type === 'image/png' || 'image/jpeg')) {
+      setFile(selectedFile);
+      setUploading('uploading');
+    } else {
+      setFile(null);
+      setError('Please select an image file (png or jpeg)');
+    }
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const selectFileHandler: (
+    e: ChangeEvent<HTMLInputElement>
+  ) => void = useCallback(e => {
     const selectedFile = e.target.files[0];
 
     if (selectedFile && (selectedFile.type === 'image/png' || 'image/jpeg')) {
@@ -43,7 +78,7 @@ export default function Home() {
       setFile(null);
       setError('Please select an image file (png or jpeg)');
     }
-  };
+  }, []);
 
   console.log(url);
 
@@ -64,19 +99,25 @@ export default function Home() {
                   <Typography variant="subtitle2">
                     File should be Jpeg, Png...
                   </Typography>
-                  <Box className={classes.innerBox}>
-                    <Grid container direction="column" alignItems="center">
-                      <Image
-                        src="/image.svg"
-                        alt="image"
-                        width={200}
-                        height={100}
-                      />
-                      <Typography color="textSecondary">
-                        Drag & Drop your image here
-                      </Typography>
-                    </Grid>
-                  </Box>
+
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <Box className={classes.innerBox}>
+                      <Grid container direction="column" alignItems="center">
+                        <Image
+                          src="/image.svg"
+                          alt="image"
+                          width={200}
+                          height={100}
+                        />
+                        <Typography color="textSecondary">
+                          Drag & Drop your image here
+                        </Typography>
+                        {isDragActive && <p>onDrag</p>}
+                      </Grid>
+                    </Box>
+                  </div>
+
                   <Typography variant="subtitle2" color="textSecondary">
                     Or
                   </Typography>
@@ -91,15 +132,45 @@ export default function Home() {
                 </Grid>
               )}
               {uploading === 'uploading' && (
-                <ProgressBar
-                  file={file}
-                  setFile={setFile}
-                  setUploading={setUploading}
-                  setUrl={setUrl}
-                />
+                <>
+                  <Typography variant="subtitle2">Uploading...</Typography>
+                  <ProgressBar
+                    file={file}
+                    setFile={setFile}
+                    setUploading={setUploading}
+                    setUrl={setUrl}
+                  />
+                </>
               )}
               {uploading === 'done' && (
-                <img src={url} alt="upload-img" width="400px" height="300px" />
+                <>
+                  <Icon className={classes.checkCircleIcon}>
+                    <CheckCircleIcon />
+                  </Icon>
+                  <Typography variant="subtitle1">
+                    Uploaded Successfully!
+                  </Typography>
+                  <img
+                    src={url}
+                    alt="upload-img"
+                    width="400px"
+                    height="300px"
+                    className={classes.uploadedImg}
+                  />
+                  <Box m={1} />
+                  {/* <TextField
+                    value={url}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    variant="filled"
+                  /> */}
+                  <CopyToClipboard text={url}>
+                    <IconButton>
+                      <FileCopyIcon />
+                    </IconButton>
+                  </CopyToClipboard>
+                </>
               )}
             </Box>
           </Box>
