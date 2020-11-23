@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { FC, useEffect, Dispatch, SetStateAction } from 'react';
 import useStorage from '@/hooks/useStorage';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -33,19 +33,12 @@ const LinearProgressWithLabel = (
 
 type Props = {
   file: File;
-  setFile: React.Dispatch<React.SetStateAction<File>>;
-  setUploading: React.Dispatch<
-    React.SetStateAction<'ready' | 'uploading' | 'done'>
-  >;
-  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  setFile: Dispatch<SetStateAction<File>>;
+  setUploading: Dispatch<SetStateAction<'ready' | 'uploading' | 'done'>>;
+  setUrl: Dispatch<SetStateAction<string>>;
 };
 
-const ProgressBar: React.FC<Props> = ({
-  file,
-  setFile,
-  setUploading,
-  setUrl,
-}) => {
+const ProgressBar: FC<Props> = ({ file, setFile, setUploading, setUrl }) => {
   const classes = useStyles();
   const { url, progress } = useStorage(file);
 
