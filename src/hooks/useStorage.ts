@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { storage, db } from '@/config/firebase';
 
 const useStorage = (file: File | null) => {
-  const [progress, setProgress] = useState<number>(0);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState<any>(null);
-  const [url, setUrl] = useState<string>('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     if (!file) {

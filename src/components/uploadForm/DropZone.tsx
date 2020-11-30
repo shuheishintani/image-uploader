@@ -13,6 +13,14 @@ const useStyles = makeStyles(() =>
       border: '1px dashed #97bef4',
       borderRadius: '16px',
     },
+    isDragged: {
+      backgroundColor: '#f6f8fb',
+      width: '400px',
+      height: '300px',
+      border: '1px dashed #97bef4',
+      borderRadius: '16px',
+      opacity: '0.7',
+    },
   })
 );
 
@@ -44,7 +52,7 @@ const DropZone: FC<Props> = ({ setFile, setError, setUploading }) => {
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
-      <Box className={classes.innerBox}>
+      <Box className={isDragActive ? classes.isDragged : classes.innerBox}>
         <Grid container direction="column" alignItems="center">
           <Box m={5}>
             <Image src="/image.svg" alt="image" width={200} height={100} />
@@ -52,7 +60,6 @@ const DropZone: FC<Props> = ({ setFile, setError, setUploading }) => {
           <Typography color="textSecondary">
             Drag & Drop your image here
           </Typography>
-          {isDragActive && <p>onDrag</p>}
         </Grid>
       </Box>
     </div>
