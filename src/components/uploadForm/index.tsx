@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import Image from 'next/image';
 import DropZone from '@/components/uploadForm/DropZone';
 import ProgressBar from '@/components/uploadForm/ProgressBar';
 import SelectFileButton from '@/components/uploadForm/SelectFileButton';
@@ -52,12 +53,12 @@ const useStyles = makeStyles(() =>
 const UploadForm: FC = () => {
   const classes = useStyles();
   const [file, setFile] = useState<File | null>(null);
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState('');
   const [uploading, setUploading] = useState<'ready' | 'uploading' | 'done'>(
     'ready'
   );
-  const [url, setUrl] = useState<string>('');
-  const [openTip, setOpenTip] = useState<boolean>(false);
+  const [url, setUrl] = useState('');
+  const [openTip, setOpenTip] = useState(false);
 
   return (
     <>
@@ -119,7 +120,7 @@ const UploadForm: FC = () => {
                   />
                 </>
               )}
-              {uploading === 'done' && (
+              {uploading === 'done' && url && (
                 <Grid container direction="column" alignItems="center">
                   <Icon className={classes.checkCircleIcon} fontSize="large">
                     <CheckCircleIcon fontSize="large" />
@@ -127,7 +128,7 @@ const UploadForm: FC = () => {
                   <Box m={1} />
                   <Typography variant="h5">Uploaded Successfully!</Typography>
                   <Box m={2} />
-                  <img
+                  <Image
                     src={url}
                     alt="upload-img"
                     width="400px"

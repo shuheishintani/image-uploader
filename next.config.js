@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['https://firebasestorage.googleapis.com'],
+    domains: ['firebasestorage.googleapis.com'],
   },
 };
